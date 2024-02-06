@@ -1,4 +1,3 @@
-# > Dan Dobrin 
 
 # GenAI Samples
 
