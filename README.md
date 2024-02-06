@@ -1,4 +1,4 @@
-# ddobrin.github.io
+# Dan's blog
 
 # GenAI Samples
 
