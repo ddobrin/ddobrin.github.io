@@ -3,6 +3,7 @@ layout: post
 title: Future of Java with Native Images, CRaC and Project Leyden
 description: Explore the future of Java
 tags: native graalvm crac leyden java serverless cloudrun gcp
+by: Dan Dobrin
 ---
 
 # The Future of Java Performance in Cloud Run: Native Java, CRaC and Project Leyden
