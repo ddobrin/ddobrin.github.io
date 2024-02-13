@@ -53,7 +53,7 @@ It is important for us to understand this process, with JIT being the default co
 
 __Fast build time + less initial optimization → slower startup + higher resource consumption__
 
-![Image1.png](Image1.png)
+![Image1]({{ '/assets/images/Image1.png' | relative_url }})
 
 Note the start-up time of the [Quotes service](https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/blob/main/services/quotes/README.md) JIT container image:
 ```shell
