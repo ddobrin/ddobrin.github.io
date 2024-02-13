@@ -53,7 +53,7 @@ It is important for us to understand this process, with JIT being the default co
 
 __Fast build time + less initial optimization → slower startup + higher resource consumption__
 
-![Image1.png](images/Image1.png)
+![Image1.png](Image1.png)
 
 Note the start-up time of the [Quotes service](https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/blob/main/services/quotes/README.md) JIT container image:
 ```shell
@@ -85,15 +85,15 @@ called [shared metadata](https://medium.com/graalvm/enhancing-3rd-party-library-
 
 __Slow build time + higher optimization → super-fast startup + lower resource consumption__
 
-![Image2.png](images/Image2.png)
+![Image2.png](Image2.png)
 
 __Why use native images with GraalVM?__
 
-![Image3.png](images/Image3.png)
+![Image3.png](Image3.png)
 
 __Any GraalVM trade-offs?__
 
-![Image4.png](images/Image4.png)
+![Image4.png](Image4.png)
 
 __Warmup for peak performance with GraalVM__
 
@@ -136,15 +136,15 @@ CRaC OpenJDK is being developed by Azul, which has made CRaC OpenJDK available u
 
 __Fast build time + less initial optimization → super-fast startup + higher resource consumption__
 
-![Image5.png](images/Image5.png)
+![Image5.png](Image5.png)
 
 __Why use Project CRaC?__
 
-![Image6.png](images/Image6.png)
+![Image6.png](Image6.png)
 
 __Any Project CRaC trade-offs?__
 
-![Image7.png](images/Image7.png)
+![Image7.png](Image7.png)
 
 __Warmup for peak performance with CRaC__
 
@@ -238,7 +238,7 @@ USER     PID     RSS     COMMAND
 ## A summary of runtime efficiency optimization options
 Let’s summarize all the concepts addressed in this blog post, starting with JIT images and the added optimization technologies available to you when running apps in Cloud Run.
 
-![Image8.png](images/Image8.png)
+![Image8.png](Image8.png)
 
 ## Which technology should you use?
 
