@@ -85,15 +85,15 @@ called [shared metadata](https://medium.com/graalvm/enhancing-3rd-party-library-
 
 __Slow build time + higher optimization → super-fast startup + lower resource consumption__
 
-![Image2.png](Image2.png)
+![Image1]({{ '/assets/images/Image2.png' | relative_url }})
 
 __Why use native images with GraalVM?__
 
-![Image3.png](Image3.png)
+![Image1]({{ '/assets/images/Image3.png' | relative_url }})
 
 __Any GraalVM trade-offs?__
 
-![Image4.png](Image4.png)
+![Image1]({{ '/assets/images/Image4.png' | relative_url }})
 
 __Warmup for peak performance with GraalVM__
 
@@ -136,15 +136,15 @@ CRaC OpenJDK is being developed by Azul, which has made CRaC OpenJDK available u
 
 __Fast build time + less initial optimization → super-fast startup + higher resource consumption__
 
-![Image5.png](Image5.png)
+![Image1]({{ '/assets/images/Image5.png' | relative_url }})
 
 __Why use Project CRaC?__
 
-![Image6.png](Image6.png)
+![Image1]({{ '/assets/images/Image6.png' | relative_url }})
 
 __Any Project CRaC trade-offs?__
 
-![Image7.png](Image7.png)
+![Image1]({{ '/assets/images/Image7.png' | relative_url }})
 
 __Warmup for peak performance with CRaC__
 
@@ -238,7 +238,7 @@ USER     PID     RSS     COMMAND
 ## A summary of runtime efficiency optimization options
 Let’s summarize all the concepts addressed in this blog post, starting with JIT images and the added optimization technologies available to you when running apps in Cloud Run.
 
-![Image8.png](Image8.png)
+![Image1]({{ '/assets/images/Image8.png' | relative_url }})
 
 ## Which technology should you use?
 
