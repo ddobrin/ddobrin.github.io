@@ -1,10 +1,4 @@
----
-layout: post
-title: The Future of Java Performance in Cloud Run: Native Java, CRaC and Project Leyden
-description: Explore the future of Java
-tags: native graalvm crac leyden java serverless cloudrun gcp
-author: Dan Dobrin
----
+
 # The Future of Java Performance in Cloud Run: Native Java, CRaC and Project Leyden
 
 Applications run better on Cloud Run if they start fast, with instant peak performance and lower CPU/memory consumption. 
