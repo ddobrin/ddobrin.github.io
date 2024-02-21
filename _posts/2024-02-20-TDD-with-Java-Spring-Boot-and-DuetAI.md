@@ -1,4 +1,4 @@
-# Test-driven Development with Duet AI for Java & Spring Boot Applications in GCP
+# Test-driven Development with Duet AI for Java & Spring Boot Applications
 Many times, as a developer, I have been asked to quickly add business functionality to an existing app. 
 As I might not be familiar with the app, I am wondering if Duet AI could help me gain an understanding of the 
 app, review the code, then help add new functionality.
