@@ -1,10 +1,11 @@
 
 # > 2024
 
-## [Test-Driven Development with Java, Spring Boot and Gemini](_posts/2024-02-20-TDD-with-Java-Spring-Boot-and-DuetAI.md)
-📅 __February 20, 2024 - by Dan Dobrin__
+## [Test-Driven Development with Java, Spring Boot and Duet AI](_posts/2024-02-20-TDD-with-Java-Spring-Boot-and-DuetAI.md)
+📅 __February 21, 2024 - by Dan Dobrin__
 
 ## [Future of Java with Native Images, CRaC and Project Leyden](_posts/2024-02-13-Future-of-Java.md)
+                                                                _posts/2024-02-20-TDD-with-Java-Spring-Boot-and-DuetAI
 📅 __February 13, 2024 - by Dan Dobrin__
 
 
