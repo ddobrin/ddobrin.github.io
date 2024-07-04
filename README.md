@@ -1,7 +1,4 @@
 
----
-layout: default
----
 # > 2024
 ## [Long document summarization techniques locally in Java with Ollama and multiple models](_posts/2024-07-12-Long-document-summarization-techniques-locally-Java-with-Ollama-multiple-models.md)
 📅 __July 12, 2024 - by Dan Dobrin__
