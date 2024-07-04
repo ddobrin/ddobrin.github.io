@@ -1,6 +1,11 @@
 
 # > 2024
 
+## [Test-Driven Development with Java, Spring Boot and Duet AI](_posts/2024-07-06-Long-document-summarization-techniques-Java-with-Gemini-models.md)
+📅 __July 06, 2024 - by Dan Dobrin__
+
+🏷️ Gemini 🏷️ GenAI 🏷️ java 🏷️ springboot 🏷️ langchain4j 🏷️ googlecloud
+
 ## [Test-Driven Development with Java, Spring Boot and Duet AI](_posts/2024-02-21-TDD-with-Java-Spring-Boot-and-DuetAI.md)
 📅 __February 21, 2024 - by Dan Dobrin__
 
