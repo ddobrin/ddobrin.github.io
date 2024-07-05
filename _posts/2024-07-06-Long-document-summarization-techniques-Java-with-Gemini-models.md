@@ -1,6 +1,6 @@
 # Long Document Summarization Techniques with Java and Gemini models
 
-Suppose your organization has a large number of documents, in various formats, and you, a Java developer, are tasked to efficiently summarize the content of each document. 
+Suppose your organization has a large number of documents, in various formats, and you, a Java developer, are tasked to efficiently summarize the content of each document.
 
 While summarizing any document with just a few paragraphs is a simple task, there are several challenges to overcome when summarizing large documents with many pages.
 
