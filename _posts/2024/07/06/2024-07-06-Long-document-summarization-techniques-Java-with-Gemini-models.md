@@ -83,7 +83,7 @@ public interface StuffingSummarizationAssistant {
     than 10 one sentence bullet points,    
     starting with an introduction and ending with a conclusion, 
     of the following text
-                  TEXT: {{your-content}}    
+                  TEXT: <content>    
     """)  
     String summarize(@V("content") String content);  
 }
@@ -113,7 +113,7 @@ public interface ChunkSummarizationAssistant {
 	Taking the following context delimited by triple backquotes into consideration   
 	'''{{context}}'''    
 	Write a concise summary of the following text delimited by triple backquotes.  
-	'''{{your-content}}'''  
+	'''<content>'''  
 	Output starts with CONCISE SUB-SUMMARY:  
 	""")
 	String summarize(@V("context") String context, @V("content") String content);
@@ -162,7 +162,7 @@ public interface FinalSummarizationAssistant {
     Please provide a concise summary in strictly no more than 10 one sentence bullet points,    
     starting with an introduction and ending with a conclusion, 
     of the following text delimited by triple backquotes.
-          '''Text:{{your-content}}'''  
+          '''Text:<content>'''  
       Output starts with SUMMARY:  
     """)  
     String summarize(@V("content") String content);  
