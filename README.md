@@ -5,7 +5,7 @@
 
 🏷️ Ollama 🏷️ Gemma2 🏷️ Llama3 🏷️ GenAI 🏷️ java 🏷️ springboot 🏷️ langchain4j
 
-## [Long document summarization techniques in Java with Gemini models](_posts/2024-07-06-Long-document-summarization-techniques-Java-with-Gemini-models.md)
+## [Long document summarization techniques in Java with Langchain4J and Gemini models](_posts/2024-07-06-Long-document-summarization-techniques-Java-with-Gemini-models.md)
 📅 __July 06, 2024 - by Dan Dobrin__
 
 🏷️ Gemini 🏷️ GenAI 🏷️ java 🏷️ springboot 🏷️ langchain4j 🏷️ googlecloud

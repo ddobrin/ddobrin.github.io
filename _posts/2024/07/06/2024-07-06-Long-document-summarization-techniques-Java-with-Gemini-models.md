@@ -1,4 +1,4 @@
-# Long Document Summarization Techniques with Java and Gemini models
+# Long Document Summarization Techniques with Java with Langchain4J and Gemini models
 
 Suppose your organization has a large number of documents, in various formats, and you, a Java developer, are tasked to efficiently summarize the content of each document.
 
@@ -14,33 +14,35 @@ We'll be leveraging [Vertex AI](https://cloud.google.com/vertex-ai?e=48754805&hl
 ## Why consider LLMs for text summarization
 
 LLMs offer a number of advantages over traditional extractive summarization methods:
-- Context understanding: can grasp complex nuances in text, producing more coherent and relevant summaries
-- Abstractive capabilities: will generate new sentences capturing the essence of the original text
-- Flexibility: can be fine-tuned for specific domains or styles of summarization
-- Multilingual support: many LLMs work across multiple languages, with versatility important for global applications
+- **Context comprehension**: can grasp complex nuances in text, producing more coherent and relevant summaries
+- **Abstractive capabilities**: will generate new sentences capturing the essence of the original text
+- **Flexibility**: can be fine-tuned for specific domains or styles of summarization
+- **Multilingual support**: many LLMs work across multiple languages, with versatility important for global applications
+
 ## Text Summarization Techniques
 
 We'll explore in detail the following three summarization techniques in this blog post
 * **Prompt Stuffing** - pass in the content of the entire document as a prompt in the LLM's content window
-* **Map-reduce** - split the document into smaller (potentially overlapping) segments, summarize each segment in parallel, then summarize the individual summaries in asecond and final step
-* **Refine iteratively** - split the document as in map-reduce, summarize the first segment, then ask the LLM to refine the initial summary iteratively with the text from the following segment, to the end of the text.
-## Before you start
-The sample code uses Java 21 throughout. If not already installed, use the [following instructions](https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/tree/main/ai-patterns/summarization-langchain4j#setup-java-ecosystem) to set it up.
+* **Map-reduce** - split the document into smaller (potentially overlapping) chunks, summarize each chunk in parallel, then summarize the individual summaries in a second and final step
+* **Refine iteratively** - split the document as in map-reduce, summarize the first chunk, then ask the LLM to refine the initial summary iteratively with the text from the following chunk, to the end of the text.
 
-Sample [documentation](https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/blob/main/ai-patterns/summarization-langchain4j/README.md) provides details for [cloning the repository](https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/blob/main/ai-patterns/summarization-langchain4j/README.md#clone-the-code), setting the [environment up](https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/blob/main/ai-patterns/summarization-langchain4j/README.md#summarization-techniques---langchain4j-vertexai-gemini) and [authenticating to Vertex AI](https://cloud.google.com/vertex-ai/docs/authentication)
+## Before you start
+The summarization code uses Java 21. If not already installed, use the [following instructions](https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/tree/main/ai-patterns/summarization-langchain4j#setup-java-ecosystem) to set it up.
+
+[Documentation](https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/blob/main/ai-patterns/summarization-langchain4j/README.md) provides details for [cloning the repository](https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/blob/main/ai-patterns/summarization-langchain4j/README.md#clone-the-code), setting the [required environment vriables up](https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/blob/main/ai-patterns/summarization-langchain4j/README.md#summarization-techniques---langchain4j-vertexai-gemini) and [authenticating to Vertex AI](https://cloud.google.com/vertex-ai/docs/authentication).
 
 ## Loading and splitting the document
-Before summarization can be started, you need to load the document, then, depending of your summarization choice, split up the content into smaller segments that can fit into the context window for your chosen LLM.
+Before summarization can be started, you need to load the document, then, depending of your summarization approach, split the content up into smaller chunks that can fit into the context window for your chosen LLM.
 
-The the latest multimodal Gemini models in Vertex AI have [very large context windows](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models), up to 2M tokens, however you will have to adapt to the context window for LLM of your choice.
+The latest multimodal Gemini models in Vertex AI have [very large context windows](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models), up to 2M tokens, however you will have to adapt to the context window for LLM of your choice.
 
 Langchain4J offers a number of out-of-the-box [Document Loaders](https://docs.langchain4j.dev/tutorials/rag#document-loader), [Document Parsers](https://docs.langchain4j.dev/tutorials/rag#document-parser) and  [DocumentSplitters](https://docs.langchain4j.dev/tutorials/rag#document-splitter) . It is very important to explore which one would yield the best results for your use-case.
 
-The codebase for this blog loads the documents from the test folder using a `FileSystemDocumentLoader` and the `TextDocumentParser`, with the sample documents in text format. 
+The codebase for this blog loads the documents from the test folder using a `FileSystemDocumentLoader` and the `TextDocumentParser`. Sample documents are provided in text format in this repo.
 
-For text splitting, the `DocumentByParagraphSplitter` is being used. It splits the provided Document into paragraphs and attempts to fit as many paragraphs as possible into a single TextSegment, adhering to the limit set for the segment size. The splitter allows you to specify an **overlap window for segments**, with the benefits discussed later in the post.
+For text splitting, the `DocumentByParagraphSplitter` is being used. It splits a Document into paragraphs and attempts to fit as many paragraphs as possible into a single TextSegment, within the limit set for the chunk size. The splitter allows you to specify an **overlap window for chunks**, with benefits discussed later in the post.
 
-Choosing **the right segment size** is an exercise dependent on the length of the context window for the LLM of choice.
+Choosing **the right chunk size** is an exercise dependent on the length of the context window for the LLM of your choice.
 
 ```java
 // load and parse the document  
@@ -61,9 +63,10 @@ List<TextSegment> chunks = splitter.split(document);
 [@UserMessage](https://docs.langchain4j.dev/tutorials/ai-services#usermessage) represents the actual input from the human user interacting with the AI. It's the question, prompt, or statement that the user wants the AI to respond to.
 
 @SystemMesage and @UserMessage can be provided directly as Strings or loaded from a prompt template from resources: `SystemMessage(fromResource = "my-system-prompt-template.txt")` or `@UserMessage(fromResource = "my-user-template.txt")`
+
 ## #1: Prompt Stuffing
 
-Stuffing is the simplest summarization technique, as you need only to pass in the content of the entire document  as a prompt in the LLM's content window. However, as prompts for LLMs are token-count-limited, different techniques need to be used for large documents, depending on the size of the content window. 
+Stuffing is the simplest summarization technique, as you can pass in the content of the entire document  as a prompt in the LLM's content window. However, as prompts for LLMs are token-count-limited, different techniques need to be used for large documents, depending on the size of the content window. 
 
 Google's Gemini models have very large context windows, making them an easy choice summarizing large documents. (see limits [here](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models))
 
@@ -101,10 +104,11 @@ String response = assistant.summarize(document.text());
 * Stuffing is applicable only as long as the entire document content can fit into the LLM context window
 ## #2: Map-Reduce
 
-Map-reduce is more intricate than prompt stuffing and implements a multi-stage summarization, as you split the document into smaller (optionally overlapping) segments, summarize each segment in parallel, then summarize the individual summaries in a second and final step.
+Map-reduce is more intricate than prompt stuffing and implements a multi-stage summarization, as you split the document into smaller (optionally overlapping) chunks, summarize each chunk in parallel, then summarize the individual summaries in a second and final step.
 
-In this method, you need to prepare two user prompt templates, one for the initial segment summarization step and another for the final combine step. The system instructions remain the same across all LLM calls.
-#### Splitting the text and summarizing individual segments (the "map" step)
+In this method, you need to prepare two user prompt templates, one for the initial chunk summarization step and another for the final combine step. The system instructions remain the same across all LLM calls.
+
+#### Splitting the text and summarizing individual chunks (the "map" step)
 You'll be using the following @UserMessage:
 ```java
 public interface ChunkSummarizationAssistant {
@@ -124,7 +128,7 @@ ChunkSummarizationAssistant assistant = AiServices.create(ChunkSummarizationAssi
 String response = assistant.summarize(context.toString(), segment);
 ```
 
-Map-reduce allows you to parallelize the individual segment summarization steps, as they are independent of each other:
+Map-reduce allows you to parallelize the individual chunk summarization steps, as they are independent of each other:
 ```java
 List<CompletableFuture<Map<Integer, String>>> futures = new ArrayList<>();  
 ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();  
@@ -144,13 +148,16 @@ CompletableFuture<Void> allDone = CompletableFuture.allOf(futures.toArray(new Co
 allDone.get(); // Wait for all processing to complete
 ```
 
-A **key factor for improving summarization results** is the concept of **overlapping segments**. Splitting a document by a specific segment size, even if done with utility classes which will split the text cleanly in paragraphs, then fit entire sentences into the remaining segment space, is arbitrary from a summarization perspective. 
+A **key factor for improving summarization results** is the concept of **overlapping chunks**. 
 
-Providing the ability for segments to overlap up to a specified overlap size can yield better summarization results by preserving more contexts between the individual segments. 
+Splitting a document by a specific chunk size is arbitrary from a summarization perspective, even if done with utility classes which will split the text cleanly in paragraphs, then attempt to fit entire sentences into the remaining chunk space. 
 
-Please consider experimenting with different segment and overlap sizes for your respective summarization use-cases.
+Providing the ability for chunks to overlap up to a specified overlap size can yield better summarization results by preserving more contexts between the individual chunks. 
 
-Please **note** that the degree to which you can parallelize LLM calls depends on whether the rate limit of API calls per minute imposed by the LLM!
+Please consider experimenting with different chunk and overlap sizes for your respective summarization use-cases.
+
+**Note**: the degree to which you can parallelize LLM calls depends on whether the rate limit of API calls per minute imposed by the LLM !!
+!
 #### Summary of summaries (the "reduce" part)
 With all individual summaries on hand, you can move on to the second and final step, the summarization of the individual summaries.
 
@@ -174,18 +181,19 @@ String response = assistant.summarize(content);
 #### Pros:
 * Large documents can be summarized even with LLMs with smaller context windows
 * Parallel processing leads to reduced summarization latency
-* Overlapping segments can improve summarizaiton accuracy
+* Overlapping chunks can improve summarizaiton accuracy
 #### Cons
 * Multiple LLM calls are required
 * There can be context loss due to arbitrary text splitting
-* Overlapping segments can slightly increase latency and create larger input text
+* Overlapping chunks can slightly increase latency and create larger input text
+
 ## #3: Refine
 
-The refine method is an alternative to map-reduce to handle large document summarization. You split the document as in map-reduce, summarize the first segment, then ask the LLM to refine the initial summary iteratively with the added text from the following segment, to the end of the text.
+The refine method is an alternative to map-reduce to handle large document summarization. You split the document similar to map-reduce, summarize the first chunk, then ask the LLM to refine the initial summary iteratively with the added text from the following chunk, to the end of the text.
 
-This approach ensures a that the summary is both comprehensive, as well as accurate, as it takes into consideration the context of the previous segment(s).
+This approach ensures a that the summary is both comprehensive, as well as accurate, as it takes into consideration the context of the previous chunk(s).
 
-You would be using the same @UserMessages illustrated in the two steps in `map-reduce`: `ChunkSummarizationAssistant` and `FinalSummarizationAssistant`.
+You would be using the same @UserMessages illustrated in the two steps in the "Map-reduce" approach: `ChunkSummarizationAssistant` and `FinalSummarizationAssistant`.
 ```java
 // process each individual chunk in order  
 // summary refined in each step by adding the summary of the current chunk  
@@ -198,17 +206,17 @@ String output = buildFinalSummary(context.toString());
 ```
 #### Pros:
 * Large documents can be summarized even with LLMs with smaller context windows
-* Context is preserved between segments, improving summarization accuracy and completeness
-* Overlapping segments can improve summarization accuracy even further
+* Context is preserved between chunks, improving summarization accuracy and completeness
+* Overlapping chunks can improve summarization accuracy even further
 #### Cons
 * Multiple LLM calls are required
-* Must be executed iteratively and does not lend itself to parallel processing, due to the interdependent nature of the individual segments and their associated context
+* Must be executed iteratively and does not lend itself to parallel processing, due to the interdependent nature of the individual chunks and their associated context
 * Latency significantly higher than map-reduce
 ## Summary
 
 In this blog post, we have explored different programmatic summarization techniques for large documents using Google's Gemini LLM, as an advanced use-case for generative AI in enterprise software. 
 
-You have a full codebase available, with practical examples, demonstrating how to implement these techniques efficiently in Java.
+LLM orchestration frameworks do not provide out-of-the-box summarization functionality, therefore you have a full codebase available here, with practical examples, demonstrating how to implement these techniques efficiently in Java.
 
 As an enterprise Java developer, you now have powerful options to leverage LLMs and add AI-driven insights to your applications, potentially transforming how you handle document analysis and summarization.
 
