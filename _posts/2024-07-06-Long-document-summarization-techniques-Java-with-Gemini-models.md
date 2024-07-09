@@ -147,6 +147,7 @@ CompletableFuture<Void> allDone = CompletableFuture.allOf(futures.toArray(new Co
   
 allDone.get(); // Wait for all processing to complete
 ```
+**Important**: please be aware that parallel summarization of individual chunks does not guarantee the ordering of the individual chunk summaries at the end of the process. It is up to the developer to keep summary ordering in mind before proceeding to the second and final step. An index value is attached to each chunk in the sample codebase, guaranteeing an ordered list of individual summaries !
 
 A **key factor for improving summarization results** is the concept of **overlapping chunks**. 
 
