@@ -1,10 +1,9 @@
+# > 2025
+
+## [Building GenAI applications with Gemini and the new Unified Gemini SDK](_posts/2025-01-04-Building-GenAI-applications-with-Gemini-and-the-new-Unified-Gemini-SDK.md)
+
 
 # > 2024
-## [Long document summarization techniques locally in Java with Ollama and multiple models](_posts/2024-07-12-Long-document-summarization-techniques-locally-Java-with-Ollama-multiple-models.md)
-📅 __July 12, 2024 - by Dan Dobrin__
-
-🏷️ Ollama 🏷️ Gemma2 🏷️ Llama3 🏷️ GenAI 🏷️ java 🏷️ springboot 🏷️ langchain4j
-
 ## [Long document summarization techniques in Java with Langchain4J and Gemini models](_posts/2024-07-06-Long-document-summarization-techniques-Java-with-Gemini-models.md)
 📅 __July 06, 2024 - by Dan Dobrin__
 
