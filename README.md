@@ -1,7 +1,6 @@
 # > 2025
-
-## [Building GenAI applications with Gemini and the new Unified Gemini SDK](_posts/2025-01-04-Building-GenAI-applications-with-Gemini-and-the-new-Unified-Gemini-SDK.md)
-
+## [The Senior Engineer vs. The Speedster: How Gemini Tackles Advent of Code](_posts/The Senior Engineer vs. The Speedster: How Gemini Tackles Advent of Code.md)
+🏷️ Gemini 🏷️ GenAI 🏷️ java 🏷️ googlecloud
 
 # > 2024
 ## [Long document summarization techniques in Java with Langchain4J and Gemini models](_posts/2024-07-06-Long-document-summarization-techniques-Java-with-Gemini-models.md)
