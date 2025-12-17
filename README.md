@@ -1,5 +1,5 @@
 # > 2025
-## [The Senior Engineer vs. The Speedster: How Gemini Tackles Advent of Code](_posts/2025-12-17-The-Senior-Engineer-vs-The-Speedster-How-AI-Tackles-Advent-of-Code.md.md)
+## [The Senior Engineer vs. The Speedster: How Gemini Tackles Advent of Code](_posts/2025-12-17-The-Senior-Engineer-vs-The-Speedster-How-AI-Tackles-Advent-of-Code.md)
 📅 __December 17, 2025 - by Dan Dobrin__
 🏷️ Gemini 🏷️ GenAI 🏷️ java 🏷️ googlecloud
 
